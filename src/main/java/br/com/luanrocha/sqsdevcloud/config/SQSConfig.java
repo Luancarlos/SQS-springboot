@@ -1,6 +1,5 @@
 package br.com.luanrocha.sqsdevcloud.config;
 
-import ch.qos.logback.classic.pattern.MessageConverter;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.sqs.AmazonSQSAsync;
 import com.amazonaws.services.sqs.AmazonSQSAsyncClientBuilder;
@@ -13,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.handler.annotation.support.PayloadArgumentResolver;
-import org.springframework.messaging.handler.annotation.support.PayloadMethodArgumentResolver;
 import org.springframework.messaging.handler.invocation.HandlerMethodArgumentResolver;
 
 import java.util.Collections;
@@ -42,6 +40,8 @@ public class SQSConfig {
         SimpleMessageListenerContainerFactory factory = new SimpleMessageListenerContainerFactory();
         factory.setAmazonSqs(amazonSQS);
         factory.setMaxNumberOfMessages(10);
+        factory.setWaitTimeOut(10);
+        factory.setVisibilityTimeout(30);
         return factory;
     }
 
